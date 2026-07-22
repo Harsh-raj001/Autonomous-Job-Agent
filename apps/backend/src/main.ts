@@ -45,9 +45,10 @@ async function bootstrap() {
       if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
         return callback(null, true);
       }
-      // Allow configured production frontend URL
+      // Allow configured production frontend URL or any Vercel deployment subdomain
       const allowed = process.env.FRONTEND_URL || '';
       if (allowed && origin === allowed) return callback(null, true);
+      if (origin.endsWith('.vercel.app')) return callback(null, true);
       callback(new Error(`CORS: origin ${origin} not allowed`));
     },
     credentials: true,
