@@ -324,6 +324,7 @@ function SearchPageContent() {
         </div>
       )}
     </div>
+  );
 }
 
 export default function JobSearchPage() {
