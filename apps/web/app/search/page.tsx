@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { 
   Search, Building2, Clock, ExternalLink, Zap, 
   Briefcase, MapPin, RefreshCw, CheckCircle, AlertCircle,
@@ -27,7 +27,7 @@ type DiscoverResult = {
   total: number;
 };
 
-export default function JobSearchPage() {
+function SearchPageContent() {
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState('newest');
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -324,5 +324,20 @@ export default function JobSearchPage() {
         </div>
       )}
     </div>
+}
+
+export default function JobSearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center space-y-4">
+        <div className="relative w-16 h-16 animate-pulse">
+          <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20" />
+          <div className="absolute inset-0 rounded-full border-4 border-t-indigo-500 animate-spin" />
+        </div>
+        <p className="text-gray-400">Loading Job Discovery...</p>
+      </div>
+    }>
+      <SearchPageContent />
+    </Suspense>
   );
 }
