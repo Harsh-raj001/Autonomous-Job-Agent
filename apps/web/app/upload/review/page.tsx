@@ -241,6 +241,7 @@ function ReviewPageContent() {
         </div>
       </div>
     </div>
+  );
 }
 
 export default function ReviewPage() {
