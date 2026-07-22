@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { Loader2, CheckCircle2, ChevronRight, Briefcase, GraduationCap, Code, AlertCircle, RefreshCw } from 'lucide-react';
@@ -8,7 +8,7 @@ import { Loader2, CheckCircle2, ChevronRight, Briefcase, GraduationCap, Code, Al
 const POLL_INTERVAL_MS = 3000;
 const MAX_WAIT_MS = 3 * 60 * 1000; // 3 minutes max
 
-export default function ReviewPage() {
+function ReviewPageContent() {
   const searchParams = useSearchParams();
   const filePath = searchParams.get('file');
   const router = useRouter();
@@ -241,5 +241,20 @@ export default function ReviewPage() {
         </div>
       </div>
     </div>
+}
+
+export default function ReviewPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center space-y-4">
+        <div className="relative w-16 h-16 animate-pulse">
+          <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20" />
+          <div className="absolute inset-0 rounded-full border-4 border-t-indigo-500 animate-spin" />
+        </div>
+        <p className="text-gray-400">Loading Resume Review...</p>
+      </div>
+    }>
+      <ReviewPageContent />
+    </Suspense>
   );
 }
