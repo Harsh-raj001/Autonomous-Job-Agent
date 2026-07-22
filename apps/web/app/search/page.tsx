@@ -134,7 +134,7 @@ export default function JobSearchPage() {
       lever: { label: 'Lever', color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
       ashby: { label: 'Ashby', color: 'bg-pink-500/20 text-pink-300 border-pink-500/30' },
     };
-    const key = (source || '').split('-')[0].toLowerCase();
+    const key = ((source || '').split('-')[0] || '').toLowerCase();
     const info = map[key] || { label: source || 'Job Board', color: 'bg-white/10 text-gray-300 border-white/10' };
     return <span className={`px-2 py-0.5 rounded-md text-xs font-medium border ${info.color}`}>{info.label}</span>;
   };
