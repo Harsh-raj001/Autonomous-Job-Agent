@@ -118,7 +118,8 @@ export class KeywordExtractorService {
 
     for (const signal of allSignals) {
       for (const [roleKey, roleKeywords] of Object.entries(this.ROLE_KEYWORDS)) {
-        if (signal.includes(roleKey) || roleKey.split(' ').some(word => signal.includes(word))) {
+        // Only match if the signal contains the full role key phrase
+        if (signal.includes(roleKey)) {
           roleKeywords.forEach(kw => keywords.add(kw));
         }
       }
