@@ -6,12 +6,15 @@ import { ApifyBaseProvider } from './apify-base.provider';
 export class WellfoundProvider extends ApifyBaseProvider {
   readonly providerName = 'wellfound';
   
-  protected readonly ACTOR_ID = process.env.APIFY_WELLFOUND_ACTOR_ID || 'anchor~wellfound-jobs-scraper';
+  protected readonly ACTOR_ID = process.env.APIFY_WELLFOUND_ACTOR_ID || 'radeance~wellfound-job-listings-scraper';
 
   protected buildPayload(keyword: string, limit: number): Record<string, any> {
     return {
       searchQuery: keyword,
-      maxItems: limit
+      keyword: keyword, // fallback
+      query: keyword, // fallback
+      maxItems: limit,
+      limit: limit // fallback
     };
   }
 

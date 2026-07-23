@@ -6,12 +6,15 @@ import { ApifyBaseProvider } from './apify-base.provider';
 export class IndeedProvider extends ApifyBaseProvider {
   readonly providerName = 'indeed';
   
-  protected readonly ACTOR_ID = process.env.APIFY_INDEED_ACTOR_ID || 'bebity~indeed-scraper';
+  protected readonly ACTOR_ID = process.env.APIFY_INDEED_ACTOR_ID || 'valig~indeed-jobs-scraper';
 
   protected buildPayload(keyword: string, limit: number): Record<string, any> {
     return {
       position: keyword,
-      country: "US", // Can be made configurable
+      query: keyword, // fallback
+      keyword: keyword, // fallback
+      country: "US",
+      location: "US", // fallback
       maxItems: limit
     };
   }

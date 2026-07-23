@@ -6,13 +6,16 @@ import { ApifyBaseProvider } from './apify-base.provider';
 export class LinkedInProvider extends ApifyBaseProvider {
   readonly providerName = 'linkedin';
   
-  protected readonly ACTOR_ID = process.env.APIFY_LINKEDIN_ACTOR_ID || 'rocky~linkedin-jobs-scraper';
+  protected readonly ACTOR_ID = process.env.APIFY_LINKEDIN_ACTOR_ID || 'curious_coder~linkedin-jobs-scraper';
 
   protected buildPayload(keyword: string, limit: number): Record<string, any> {
     return {
       keywords: keyword,
-      location: "United States", // Can be made dynamic
-      count: limit
+      keyword: keyword, // fallback
+      search: keyword, // fallback
+      location: "United States",
+      count: limit,
+      maxItems: limit // fallback
     };
   }
 

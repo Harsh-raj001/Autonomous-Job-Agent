@@ -6,13 +6,16 @@ import { ApifyBaseProvider } from './apify-base.provider';
 export class GoogleJobsProvider extends ApifyBaseProvider {
   readonly providerName = 'google-jobs';
   
-  protected readonly ACTOR_ID = process.env.APIFY_GOOGLE_JOBS_ACTOR_ID || 'apify~google-jobs-scraper';
+  protected readonly ACTOR_ID = process.env.APIFY_GOOGLE_JOBS_ACTOR_ID || 'orgupdate~google-jobs-scraper';
 
   protected buildPayload(keyword: string, limit: number): Record<string, any> {
     return {
       searchQuery: keyword,
+      query: keyword, // fallback
       country: "US", 
-      maxItems: limit
+      location: "United States", // fallback
+      maxItems: limit,
+      maxResults: limit // fallback
     };
   }
 
