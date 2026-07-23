@@ -3,16 +3,16 @@ import { NormalizedJob } from './base.provider';
 import { ApifyBaseProvider } from './apify-base.provider';
 
 @Injectable()
-export class IndeedProvider extends ApifyBaseProvider {
-  readonly providerName = 'indeed';
+export class GlassdoorProvider extends ApifyBaseProvider {
+  readonly providerName = 'glassdoor';
   
-  protected readonly ACTOR_ID = process.env.APIFY_INDEED_ACTOR_ID || 'bebity~indeed-scraper';
+  protected readonly ACTOR_ID = process.env.APIFY_GLASSDOOR_ACTOR_ID || 'epctex~glassdoor-scraper';
 
   protected buildPayload(keyword: string, limit: number): Record<string, any> {
     return {
-      position: keyword,
-      country: "US", // Can be made configurable
-      maxItems: limit
+      searchQuery: keyword,
+      location: "US", 
+      maxResults: limit
     };
   }
 
@@ -26,16 +26,16 @@ export class IndeedProvider extends ApifyBaseProvider {
       seen.add(jobUrl);
 
       result.push({
-        sourceId: `indeed-${job.id || job.jobKey || job.jobkey || Math.random().toString()}`,
+        sourceId: `glassdoor-${job.id || job.jobId || Math.random().toString()}`,
         title: job.title || job.jobTitle || 'Untitled',
-        companyName: job.company || job.companyName || 'Unknown Company',
-        description: (job.description || job.snippet || '').slice(0, 2000),
+        companyName: job.company || job.companyName || job.employerName || 'Unknown Company',
+        description: (job.description || job.jobDescription || '').slice(0, 2000),
         url: jobUrl,
         postedAt: job.postedAt || job.date ? new Date(job.postedAt || job.date) : new Date(),
         skills: job.skills || [],
-        location: job.location || job.formattedLocation || 'Remote',
+        location: job.location || job.jobLocation || 'Remote',
         jobType: job.jobType || job.employmentType || 'Full-time',
-        salary: job.salary || null,
+        salary: job.salary || job.salaryEstimate || null,
       });
     }
 

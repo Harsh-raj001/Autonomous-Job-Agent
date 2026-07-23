@@ -8,6 +8,9 @@ import { ArbeitNowProvider } from './arbeitnow.provider';
 import { NaukriProvider } from './naukri.provider';
 import { IndeedProvider } from './indeed.provider';
 import { LinkedInProvider } from './linkedin.provider';
+import { GlassdoorProvider } from './glassdoor.provider';
+import { WellfoundProvider } from './wellfound.provider';
+import { GoogleJobsProvider } from './google-jobs.provider';
 
 @Injectable()
 export class ProviderManager {
@@ -23,12 +26,18 @@ export class ProviderManager {
     private readonly naukriProvider: NaukriProvider,
     private readonly indeedProvider: IndeedProvider,
     private readonly linkedInProvider: LinkedInProvider,
+    private readonly glassdoorProvider: GlassdoorProvider,
+    private readonly wellfoundProvider: WellfoundProvider,
+    private readonly googleJobsProvider: GoogleJobsProvider,
   ) {
     this.registerProvider(this.remotiveProvider);
     this.registerProvider(this.arbeitNowProvider);
     this.registerProvider(this.naukriProvider);
     this.registerProvider(this.indeedProvider);
     this.registerProvider(this.linkedInProvider);
+    this.registerProvider(this.glassdoorProvider);
+    this.registerProvider(this.wellfoundProvider);
+    this.registerProvider(this.googleJobsProvider);
     this.registerProvider(this.greenhouseProvider);
     this.registerProvider(this.leverProvider);
     this.registerProvider(this.ashbyProvider);

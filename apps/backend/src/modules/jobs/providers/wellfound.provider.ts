@@ -3,15 +3,14 @@ import { NormalizedJob } from './base.provider';
 import { ApifyBaseProvider } from './apify-base.provider';
 
 @Injectable()
-export class IndeedProvider extends ApifyBaseProvider {
-  readonly providerName = 'indeed';
+export class WellfoundProvider extends ApifyBaseProvider {
+  readonly providerName = 'wellfound';
   
-  protected readonly ACTOR_ID = process.env.APIFY_INDEED_ACTOR_ID || 'bebity~indeed-scraper';
+  protected readonly ACTOR_ID = process.env.APIFY_WELLFOUND_ACTOR_ID || 'anchor~wellfound-jobs-scraper';
 
   protected buildPayload(keyword: string, limit: number): Record<string, any> {
     return {
-      position: keyword,
-      country: "US", // Can be made configurable
+      searchQuery: keyword,
       maxItems: limit
     };
   }
@@ -26,16 +25,16 @@ export class IndeedProvider extends ApifyBaseProvider {
       seen.add(jobUrl);
 
       result.push({
-        sourceId: `indeed-${job.id || job.jobKey || job.jobkey || Math.random().toString()}`,
+        sourceId: `wellfound-${job.id || job.jobId || Math.random().toString()}`,
         title: job.title || job.jobTitle || 'Untitled',
-        companyName: job.company || job.companyName || 'Unknown Company',
-        description: (job.description || job.snippet || '').slice(0, 2000),
+        companyName: job.company || job.startupName || job.companyName || 'Unknown Company',
+        description: (job.description || job.jobDescription || '').slice(0, 2000),
         url: jobUrl,
         postedAt: job.postedAt || job.date ? new Date(job.postedAt || job.date) : new Date(),
-        skills: job.skills || [],
-        location: job.location || job.formattedLocation || 'Remote',
+        skills: job.skills || job.tags || [],
+        location: job.location || job.jobLocation || 'Remote',
         jobType: job.jobType || job.employmentType || 'Full-time',
-        salary: job.salary || null,
+        salary: job.salary || job.compensation || null,
       });
     }
 

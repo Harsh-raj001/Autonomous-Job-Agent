@@ -1,60 +1,19 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { BaseJobProvider, NormalizedJob } from './base.provider';
+import { Injectable } from '@nestjs/common';
+import { NormalizedJob } from './base.provider';
+import { ApifyBaseProvider } from './apify-base.provider';
 
 @Injectable()
-export class LinkedInProvider extends BaseJobProvider {
+export class LinkedInProvider extends ApifyBaseProvider {
   readonly providerName = 'linkedin';
-  private readonly logger = new Logger(LinkedInProvider.name);
   
-  private readonly APIFY_TOKEN = process.env.APIFY_API_TOKEN || '';
-  private readonly ACTOR_ID = process.env.APIFY_LINKEDIN_ACTOR_ID || 'rocky~linkedin-jobs-scraper'; // Default public actor
+  protected readonly ACTOR_ID = process.env.APIFY_LINKEDIN_ACTOR_ID || 'rocky~linkedin-jobs-scraper';
 
-  async discoverJobs(keywords: string[], limit: number): Promise<any[]> {
-    if (!this.APIFY_TOKEN) {
-      this.logger.warn('[LinkedIn] No Apify API token configured. Skipping discovery.');
-      return [];
-    }
-
-    this.logger.log(`[LinkedIn] Searching for: ${keywords.join(', ')} via Apify Actor: ${this.ACTOR_ID}`);
-    const allJobs: any[] = [];
-
-    for (const keyword of keywords.slice(0, 3)) {
-      try {
-        const url = `https://api.apify.com/v2/acts/${this.ACTOR_ID}/run-sync-get-dataset-items?token=${this.APIFY_TOKEN}`;
-        
-        const payload = {
-          keywords: keyword,
-          location: "United States", // Can be made dynamic
-          count: limit
-        };
-
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-          // Set a long timeout since Apify synchronous runs can take up to 5 minutes
-          signal: AbortSignal.timeout(300000), 
-        });
-
-        if (!res.ok) {
-          const text = await res.text();
-          this.logger.warn(`[LinkedIn] Apify HTTP ${res.status} for keyword "${keyword}": ${text}`);
-          continue;
-        }
-
-        const jobs = await res.json();
-        this.logger.log(`[LinkedIn] Found ${jobs?.length || 0} jobs for "${keyword}"`);
-        if (Array.isArray(jobs)) {
-          allJobs.push(...jobs);
-        }
-      } catch (err: any) {
-        this.logger.error(`[LinkedIn] Error fetching "${keyword}" from Apify: ${err.message}`);
-      }
-    }
-
-    return allJobs;
+  protected buildPayload(keyword: string, limit: number): Record<string, any> {
+    return {
+      keywords: keyword,
+      location: "United States", // Can be made dynamic
+      count: limit
+    };
   }
 
   async normalize(rawJobs: any[]): Promise<NormalizedJob[]> {

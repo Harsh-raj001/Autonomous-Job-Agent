@@ -9,6 +9,9 @@ import { ArbeitNowProvider } from './providers/arbeitnow.provider';
 import { NaukriProvider } from './providers/naukri.provider';
 import { IndeedProvider } from './providers/indeed.provider';
 import { LinkedInProvider } from './providers/linkedin.provider';
+import { GlassdoorProvider } from './providers/glassdoor.provider';
+import { WellfoundProvider } from './providers/wellfound.provider';
+import { GoogleJobsProvider } from './providers/google-jobs.provider';
 import { DiscoveryScheduler } from './discovery.scheduler';
 import { KeywordExtractorService } from './keyword-extractor.service';
 import { MatchModule } from '../match/match.module';
@@ -27,6 +30,9 @@ import { JobsController } from './jobs.controller';
     NaukriProvider,
     IndeedProvider,
     LinkedInProvider,
+    GlassdoorProvider,
+    WellfoundProvider,
+    GoogleJobsProvider,
     KeywordExtractorService,
     DiscoveryScheduler,
   ],
