@@ -25,8 +25,8 @@ export abstract class ApifyBaseProvider extends BaseJobProvider {
     this.logger.log(`[${this.providerName}] Searching for: ${keywords.join(', ')} via Apify Actor: ${this.ACTOR_ID}`);
     const allJobs: any[] = [];
 
-    // Limit to top 3 keywords per run to prevent excessive Apify credit usage and timeouts
-    for (const keyword of keywords.slice(0, 3)) {
+    // Limit to the single most important keyword per run to drastically cut Apify credit usage
+    for (const keyword of keywords.slice(0, 1)) {
       try {
         const url = `https://api.apify.com/v2/acts/${this.ACTOR_ID}/run-sync-get-dataset-items?token=${this.APIFY_TOKEN}`;
         const payload = this.buildPayload(keyword, limit);

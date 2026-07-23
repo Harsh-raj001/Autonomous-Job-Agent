@@ -15,10 +15,10 @@ export class DiscoveryScheduler {
     private readonly keywordExtractor: KeywordExtractorService,
   ) {}
 
-  // Run every 6 hours
-  @Cron('0 */6 * * *')
+  // Run every 24 hours at midnight
+  @Cron('0 0 * * *')
   async handleCron() {
-    this.logger.log('Running scheduled job discovery (6-hour interval)');
+    this.logger.log('Running scheduled job discovery (24-hour interval)');
     await this.discoverAndStoreJobs();
   }
 
@@ -41,7 +41,8 @@ export class DiscoveryScheduler {
 
     this.logger.log(`Discovery using keywords: ${keywords.join(', ')}`);
 
-    const discoveredJobs = await this.providerManager.runAllPipelines(keywords, 20);
+    // Only fetch 5 jobs per provider to save Apify credits
+    const discoveredJobs = await this.providerManager.runAllPipelines(keywords, 5);
     this.logger.log(`Discovery complete. Found ${discoveredJobs.length} total jobs. Saving new ones...`);
 
     let newJobsInserted = 0;
