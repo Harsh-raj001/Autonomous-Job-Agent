@@ -34,6 +34,22 @@ export class KeywordExtractorService {
       'Financial Analyst', 'Senior Financial Analyst', 'Finance Analyst',
       'FP&A Analyst', 'Investment Analyst', 'Associate Financial Analyst',
     ],
+    'private equity': [
+      'Private Equity Associate', 'Private Equity Analyst', 'PE Analyst',
+      'Investment Banking Analyst', 'LBO Modeler'
+    ],
+    'investment analyst': [
+      'Investment Analyst', 'Equity Research Analyst', 'Fixed Income Analyst',
+      'Portfolio Analyst', 'Asset Management Analyst'
+    ],
+    'financial planning analyst': [
+      'Financial Planning Analyst', 'FP&A Analyst', 'Senior FP&A Analyst',
+      'Strategic Finance Analyst'
+    ],
+    'finance executive': [
+      'Finance Executive', 'Finance Manager', 'Director of Finance',
+      'VP of Finance', 'CFO', 'Chief Financial Officer'
+    ],
     'financial modeling': [
       'Financial Analyst', 'FP&A Analyst', 'Corporate Finance Analyst',
       'Investment Banking Analyst', 'Valuation Analyst', 'Financial Modeler',
@@ -122,6 +138,12 @@ export class KeywordExtractorService {
         }
         if (title.includes('finance') || title.includes('financial')) {
           this.ROLE_KEYWORDS['financial analyst'].forEach(kw => keywords.add(kw));
+          this.ROLE_KEYWORDS['finance executive'].forEach(kw => keywords.add(kw));
+          this.ROLE_KEYWORDS['financial planning analyst'].forEach(kw => keywords.add(kw));
+        }
+        if (title.includes('equity') || title.includes('investment')) {
+          this.ROLE_KEYWORDS['private equity'].forEach(kw => keywords.add(kw));
+          this.ROLE_KEYWORDS['investment analyst'].forEach(kw => keywords.add(kw));
         }
         if (title.includes('market')) {
           this.ROLE_KEYWORDS['marketing'].forEach(kw => keywords.add(kw));
@@ -145,12 +167,12 @@ export class KeywordExtractorService {
 
   private getDefaultKeywords(): string[] {
     return [
-      'Product Manager',
-      'Associate Product Manager',
-      'Business Analyst',
-      'Data Analyst',
-      'Project Manager',
       'Financial Analyst',
+      'Private Equity Analyst',
+      'Investment Analyst',
+      'Financial Planning Analyst',
+      'Finance Executive',
+      'FP&A Analyst'
     ];
   }
 }

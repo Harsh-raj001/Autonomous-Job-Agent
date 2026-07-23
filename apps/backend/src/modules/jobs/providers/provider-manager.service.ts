@@ -5,6 +5,9 @@ import { LeverProvider } from './lever.provider';
 import { AshbyProvider } from './ashby.provider';
 import { RemotiveProvider } from './remotive.provider';
 import { ArbeitNowProvider } from './arbeitnow.provider';
+import { NaukriProvider } from './naukri.provider';
+import { IndeedProvider } from './indeed.provider';
+import { LinkedInProvider } from './linkedin.provider';
 
 @Injectable()
 export class ProviderManager {
@@ -17,9 +20,15 @@ export class ProviderManager {
     private readonly ashbyProvider: AshbyProvider,
     private readonly remotiveProvider: RemotiveProvider,
     private readonly arbeitNowProvider: ArbeitNowProvider,
+    private readonly naukriProvider: NaukriProvider,
+    private readonly indeedProvider: IndeedProvider,
+    private readonly linkedInProvider: LinkedInProvider,
   ) {
     this.registerProvider(this.remotiveProvider);
     this.registerProvider(this.arbeitNowProvider);
+    this.registerProvider(this.naukriProvider);
+    this.registerProvider(this.indeedProvider);
+    this.registerProvider(this.linkedInProvider);
     this.registerProvider(this.greenhouseProvider);
     this.registerProvider(this.leverProvider);
     this.registerProvider(this.ashbyProvider);
