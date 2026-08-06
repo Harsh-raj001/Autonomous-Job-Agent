@@ -4,26 +4,34 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    /* Liquid Glass Theme Core Variables */
+    --background: 40 25% 97%; /* Warm Cream FAF8F5 */
+    --foreground: 0 0% 12%;   /* Charcoal 1F1F1F */
+    
+    /* Mapping existing structure so we don't break un-rewritten components */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    
+    /* Primary: Deep Olive (#556B2F) */
+    --primary: 82 39% 30%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary: Muted Gold (#C2A15A) */
+    --secondary: 41 46% 55%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 40 10% 92%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 33 31% 41%; /* Bronze #8B6B4A */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --radius: 0.75rem;
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 82 39% 30%;
+    --radius: 1rem; /* Softer radius for glass feel */
   }
 }
 
@@ -33,7 +41,60 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    background-image: radial-gradient(circle at top center, rgba(30, 58, 138, 0.15) 0%, rgba(9, 9, 11, 1) 100%);
-    background-attachment: fixed;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Soft Warm Cream Gradient */
+    background: radial-gradient(circle at top left, #FFFFFF 0%, #FAF8F5 100%);
+    min-height: 100vh;
   }
+}
+
+/* ── Liquid Glass Utilities ── */
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm relative overflow-hidden;
+    /* Soft inner highlight */
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.7), 0 4px 6px -1px rgba(0,0,0,0.02);
+  }
+  
+  .glass-floating {
+    @apply bg-white/70 backdrop-blur-2xl border border-white/50 relative;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.8), 0 10px 30px -10px rgba(0,0,0,0.08);
+  }
+
+  .texture-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 150px;
+  }
+  
+  .font-display {
+    font-family: var(--font-lora), Georgia, serif;
+  }
+}
+
+/* ── Ambient Background Layer Shapes ── */
+.ambient-blob-1 {
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(194, 161, 90, 0.08) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+  animation: drift 15s ease-in-out infinite alternate;
+}
+
+.ambient-blob-2 {
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(85, 107, 47, 0.06) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  animation: drift 20s ease-in-out infinite alternate-reverse;
 }

@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function ApplicationsPage() {
   return (
-    <div className="p-8 md:p-12 max-w-6xl mx-auto space-y-10">
+    <div className="p-8 md:p-12 max-w-6xl mx-auto space-y-10 min-h-[calc(100vh-64px)] bg-background font-sans">
       <header>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight">Applications</h1>
-        <p className="text-gray-400 mt-2">Track the status of your manual and automated job applications.</p>
+        <h1 className="text-4xl font-semibold text-foreground tracking-tight">Applications</h1>
+        <p className="text-muted-foreground mt-2 font-medium">Track the status of your manual and automated job applications.</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -15,19 +15,19 @@ export default function ApplicationsPage() {
         <StatusFilter label="Rejected" count={3} />
       </div>
 
-      <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md">
+      <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-white/10 bg-black/40">
-                <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Company</th>
-                <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Role</th>
-                <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Method</th>
-                <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Date Applied</th>
-                <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+              <tr className="border-b border-border bg-secondary/50">
+                <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Company</th>
+                <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Role</th>
+                <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Method</th>
+                <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Date Applied</th>
+                <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-border">
               <ApplicationRow 
                 company="Stripe" 
                 role="Product Manager" 
@@ -66,32 +66,32 @@ export default function ApplicationsPage() {
 
 function StatusFilter({ label, count, active = false }: { label: string, count: number, active?: boolean }) {
   return (
-    <button className={`flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 ${active ? 'bg-blue-500/10 border-blue-500/50' : 'bg-black/40 border-white/5 hover:border-white/20'}`}>
-      <span className={`font-medium ${active ? 'text-blue-400' : 'text-gray-400'}`}>{label}</span>
-      <span className={`px-2 py-1 rounded-md text-xs font-bold ${active ? 'bg-blue-500/20 text-blue-400' : 'bg-white/10 text-gray-400'}`}>{count}</span>
+    <button className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-300 ${active ? 'bg-secondary border-foreground/20' : 'bg-card border-border hover:border-foreground/10 hover:bg-secondary/50'}`}>
+      <span className={`font-semibold ${active ? 'text-foreground' : 'text-muted-foreground'}`}>{label}</span>
+      <span className={`px-2 py-1 rounded-md text-xs font-bold ${active ? 'bg-foreground text-background' : 'bg-secondary text-muted-foreground'}`}>{count}</span>
     </button>
   );
 }
 
 function ApplicationRow({ company, role, method, date, status }: any) {
   const statusColors: any = {
-    'Applied': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    'Interviewing': 'bg-green-500/10 text-green-400 border-green-500/20',
-    'Rejected': 'bg-red-500/10 text-red-400 border-red-500/20',
+    'Applied': 'bg-secondary text-foreground border-border',
+    'Interviewing': 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20',
+    'Rejected': 'bg-destructive/10 text-destructive border-destructive/20',
   };
 
   return (
-    <tr className="hover:bg-white/5 transition-colors">
-      <td className="px-6 py-4 font-bold text-white">{company}</td>
-      <td className="px-6 py-4 text-gray-300">{role}</td>
+    <tr className="hover:bg-secondary/50 transition-colors">
+      <td className="px-6 py-4 font-semibold text-foreground">{company}</td>
+      <td className="px-6 py-4 text-muted-foreground font-medium">{role}</td>
       <td className="px-6 py-4">
-        <span className="px-2.5 py-1 rounded-md bg-white/5 text-xs font-medium text-gray-400 border border-white/10">
+        <span className="px-2.5 py-1 rounded-md bg-secondary text-xs font-semibold text-foreground border border-border">
           {method}
         </span>
       </td>
-      <td className="px-6 py-4 text-sm text-gray-400">{date}</td>
+      <td className="px-6 py-4 text-sm text-muted-foreground font-medium">{date}</td>
       <td className="px-6 py-4">
-        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusColors[status] || 'bg-gray-500/10 text-gray-400 border-gray-500/20'}`}>
+        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusColors[status] || 'bg-secondary text-muted-foreground border-border'}`}>
           {status}
         </span>
       </td>

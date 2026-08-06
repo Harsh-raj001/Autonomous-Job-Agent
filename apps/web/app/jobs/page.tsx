@@ -1,22 +1,22 @@
-'use client';
+﻿'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function JobFeedPage() {
   return (
-    <div className="p-8 md:p-12 max-w-6xl mx-auto space-y-10">
+    <div className="p-8 md:p-12 max-w-6xl mx-auto space-y-10 min-h-[calc(100vh-64px)] bg-background">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">Job Feed</h1>
-          <p className="text-gray-400 mt-2">Recently discovered opportunities matched to your profile.</p>
+          <h1 className="text-4xl font-bold text-foreground tracking-tight" style={{ fontFamily: 'var(--font-lora, Lora, Georgia, serif)' }}>Job Feed</h1>
+          <p className="text-muted-foreground mt-2 font-medium">Recently discovered opportunities matched to your profile.</p>
         </div>
         <div className="flex gap-3">
-          <select className="bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition-colors appearance-none pr-10 relative">
+          <select className="bg-card border border-w-border rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:border-e-brand transition-colors appearance-none pr-10 relative text-sm shadow-sm font-medium">
             <option>All Matches</option>
             <option>&gt; 90% Match</option>
             <option>&gt; 80% Match</option>
           </select>
-          <button className="bg-white/10 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-white/20 transition-all">
+          <button className="bg-e-brand hover:bg-e-dark text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-md shadow-e-brand/20">
             Scan Now
           </button>
         </div>
@@ -31,7 +31,7 @@ export default function JobFeedPage() {
           visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
         }}
       >
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
           <JobCard 
             role="Senior Frontend Engineer" 
             company="Vercel" 
@@ -46,7 +46,7 @@ export default function JobFeedPage() {
             isApplied={true}
           />
         </motion.div>
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
           <JobCard 
             role="Product Engineer" 
             company="Linear" 
@@ -61,7 +61,7 @@ export default function JobFeedPage() {
             isApplied={false}
           />
         </motion.div>
-        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+        <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
           <JobCard 
             role="Full Stack Developer" 
             company="Supabase" 
@@ -83,38 +83,36 @@ export default function JobFeedPage() {
 
 function JobCard({ role, company, location, type, posted, score, opportunity, probability, competition, action, isApplied }: any) {
   return (
-    <motion.div 
-      whileHover={{ scale: 1.01 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-white/20 transition-all duration-300"
+    <div 
+      className="bg-card border border-border p-6 rounded-xl hover:shadow-sm transition-shadow duration-300"
     >
       <div className="flex justify-between items-start">
         <div className="flex gap-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center border border-white/10">
-            <span className="text-xl font-bold text-white">{company.charAt(0)}</span>
+          <div className="w-12 h-12 bg-w-stone rounded-lg flex items-center justify-center border border-w-border shrink-0">
+            <span className="text-xl font-bold text-e-brand">{company.charAt(0)}</span>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white">{role}</h3>
-            <p className="text-sm text-gray-400 mt-1">{company} • {location}</p>
+            <h3 className="text-lg font-semibold text-foreground">{role}</h3>
+            <p className="text-sm text-muted-foreground mt-1 font-medium">{company} • {location}</p>
             <div className="flex gap-2 mt-3">
-              <span className="px-2.5 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/10">{type}</span>
-              <span className="px-2.5 py-1 rounded-full bg-white/5 text-xs text-gray-300 border border-white/10">{posted}</span>
+              <span className="px-2.5 py-1 rounded-md bg-secondary text-xs text-foreground border border-border font-medium">{type}</span>
+              <span className="px-2.5 py-1 rounded-md bg-secondary text-xs text-foreground border border-border font-medium">{posted}</span>
             </div>
           </div>
         </div>
         <div className="flex flex-col items-end gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-400">Match</span>
-            <div className={`px-3 py-1 rounded-full border ${score >= 90 ? 'bg-green-500/10 border-green-500/30 text-green-400' : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400'}`}>
-              <span className="font-bold">{score}</span>
+            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Match</span>
+            <div className="px-3 py-1 rounded-full border border-border bg-secondary">
+              <span className="font-bold text-sm text-foreground">{score}</span>
             </div>
           </div>
           
           <button 
-            className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${
+            className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
               isApplied 
-                ? 'bg-white/10 text-gray-400 cursor-default' 
-                : 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)]'
+                ? 'bg-secondary text-muted-foreground border border-border cursor-default' 
+                : 'bg-e-brand hover:bg-e-dark text-white shadow-md shadow-e-brand/20'
             }`}
           >
             {isApplied ? 'Applied' : 'Auto Apply'}
@@ -122,24 +120,24 @@ function JobCard({ role, company, location, type, posted, score, opportunity, pr
         </div>
       </div>
 
-      <div className="mt-6 pt-5 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="mt-6 pt-5 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Opportunity</p>
-          <p className={`text-sm font-semibold ${opportunity === 'High' ? 'text-green-400' : 'text-yellow-400'}`}>{opportunity}</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">Opportunity</p>
+          <p className="text-sm font-semibold text-foreground">{opportunity}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Hiring Prob.</p>
-          <p className="text-sm text-white font-medium">{probability}</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">Hiring Prob.</p>
+          <p className="text-sm text-foreground font-semibold">{probability}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Competition</p>
-          <p className="text-sm text-white font-medium">{competition}</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">Competition</p>
+          <p className="text-sm text-foreground font-semibold">{competition}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Action</p>
-          <p className="text-sm text-blue-400 font-medium">{action}</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">Action</p>
+          <p className="text-sm text-foreground font-semibold">{action}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
