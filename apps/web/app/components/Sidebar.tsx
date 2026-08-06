@@ -112,7 +112,7 @@ export default function Sidebar() {
     { name: 'Job Search',   href: '/search',    icon: Search },
     { name: 'Review Queue', href: '/review',    icon: Bookmark },
     { name: 'Upload Resume',href: '/upload',    icon: Upload },
-    { name: 'System Health',href: '/diagnosis', icon: Activity },
+    { name: 'Activity & Insights',href: '/activity', icon: Activity },
   ];
 
   return (
