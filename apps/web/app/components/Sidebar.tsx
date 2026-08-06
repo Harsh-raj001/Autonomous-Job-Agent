@@ -116,7 +116,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 hidden md:flex flex-col shrink-0 p-4 relative z-50">
+    <aside className="w-64 hidden md:flex flex-col shrink-0 p-4 sticky top-0 h-screen z-50">
       <div className="flex-1 glass-floating rounded-2xl flex flex-col p-4 shadow-xl">
         
         {/* Brand */}

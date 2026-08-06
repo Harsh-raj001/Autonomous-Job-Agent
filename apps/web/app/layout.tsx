@@ -40,11 +40,11 @@ export default function RootLayout({
             <div className="ambient-blob-2" />
           </div>
 
-          <div className="flex h-screen overflow-hidden relative z-10">
+          <div className="flex min-h-screen relative z-10">
             <Sidebar />
             
             {/* Main Content */}
-            <main className="flex-1 flex flex-col overflow-y-auto">
+            <main className="flex-1 flex flex-col">
               <div className="flex-1 flex flex-col pt-4 pr-4 pb-4">
                 {children}
               </div>
